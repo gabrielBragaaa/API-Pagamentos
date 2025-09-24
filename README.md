@@ -1,47 +1,40 @@
-*API PAGAMENTOS*
-Sobre o projeto
+# API PAGAMENTOS
+## Sobre o projeto
 API RESTful para gerenciar pagamentos de débitos de pessoas físicas e jurídicas.
 
-Tecnologias utilizadas e Ferramentas
-Intellij
-Java 17
-Spring boot
-Postman
-Docker
-Banco de dados h2
+### Tecnologias utilizadas e Ferramentas
+- Intellij
+- Java 17
+- Spring boot
+- Postman
+- Docker
+- Banco de dados h2
 
-*Funcionalidades*
+## Funcionalidades
 
-Criar pagamento POST /api/payments
+1- Criar pagamento **POST /api/payments**
 
-Campos: debitCode, payerDocument, method (boleto, pix, cartao_credito, cartao_debito), cardNumber (para cartão), paymentAmount.
-Pagamentos novos iniciam com status = PENDENTE.
+**Campos**: debitCode, payerDocument, method (boleto, pix, cartao_credito, cartao_debito), cardNumber (para cartão), paymentAmount.
 
-Atualizar status PUT /api/payments/{id}/status
+2- Atualizar status **PUT /api/payments/{id}/status**
 
-Transições permitidas:
+**Campo**: newStatus.(PENDENTE, PROCESSADO_SUCESSO, PROCESSADO_FALHA)
 
-PENDENTE → PROCESSADO_SUCESSO | PROCESSADO_FALHA
-PROCESSADO_FALHA → PENDENTE
-PROCESSADO_SUCESSO não pode ser alterado.
+3- Listar pagamentos **GET /api/payments**
 
-Listar pagamentos (GET /api/payments)
+**Filtros de busca:**
 
-Filtros de busca:
+- ?debitCode=xxx 
+- ?payerDocument=xxx
+- ?status=xxx
 
-?debitCode=xxx
-?payerDocument=xxx
-?status=xxx
 
-Retorna apenas pagamentos ativos (active = true).
+4- Exclusão lógica **DELETE /api/payments/{id}**
 
-Exclusão lógica (DELETE /api/payments/{id})
+Só permite deletar pagamentos com status = PENDENTE. Altera o status do pagamento para inativo e mantem os dados no banco.
 
-Só permite deletar pagamentos com status = PENDENTE.
-Marca active = false sem remover do banco
+## Observações
 
-*Observações*
-
-Todos os payloads de entrada e saída são em JSON.
-Mensagens de erro claras são retornadas quando não existem resultados ou quando há falha na transição de status.
-API implementa soft delete mantendo histórico de pagamentos.
+- Todos os payloads de entrada e saída são em JSON.
+- Mensagens de erro claras são retornadas.
+- API implementa soft delete mantendo histórico de pagamentos.
