@@ -11,24 +11,33 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "debit_code", nullable = false)
     private Integer debitCode;
+    
     @Column(name = "payer_document", nullable = false)
     private String payerDocument;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "method", nullable = false)
     private PaymentMethod method;
+
     @Column(name = "card_number")
     private String cardNumber;
+
     @Column(name = "payment_amount", nullable = false, precision = 12, scale = 2)
     private BigDecimal paymentAmount;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private PaymentStatus status = PaymentStatus.PENDENTE;
+
     @Column(name = "active", nullable = false)
     private Boolean active = true;
+
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
+
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
