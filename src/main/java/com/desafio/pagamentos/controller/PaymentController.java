@@ -24,25 +24,31 @@ public class PaymentController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@Valid @RequestBody PaymentRequestDTO req) {
+    public ResponseEntity<PaymentResponseDTO> create(@Valid @RequestBody PaymentRequestDTO req) {
         Payment p = new Payment();
-
         p.setDebitCode(req.getDebitCode());
         p.setPayerDocument(req.getPayerDocument());
-        p.setMethod(PaymentMethod.valueOf(req.getMethod().toUpperCase()));
+        try{
+            p.setMethod(PaymentMethod.valueOf(req.getMethod().toUpperCase()));
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid payment method: " + req.getMethod());
+        }
+
         p.setCardNumber(req.getCardNumber());
         p.setPaymentAmount(req.getPaymentAmount());
 
         Payment saved = service.createPayment(p);
-        return ResponseEntity.status(201).body(saved);
+        PaymentResponseDTO response = new PaymentResponseDTO(saved);
+        return ResponseEntity.status(201).body(response);
     }
 
     @PutMapping("/{id}/status")
-    public ResponseEntity<?> updateStatus(@PathVariable Long id,
+    public ResponseEntity<PaymentResponseDTO> updateStatus(@PathVariable Long id,
     @Valid @RequestBody StatusUpdateRequestDTO req){
         PaymentStatus newStatus = PaymentStatus.valueOf(req.getNewStatus().toUpperCase());
         Payment updated = service.updateStatus(id,newStatus);
-        return ResponseEntity.ok(updated);
+        PaymentResponseDTO responseDTO = new PaymentResponseDTO(updated);
+        return ResponseEntity.ok(responseDTO);
     }
 
     @GetMapping
@@ -64,7 +70,7 @@ public class PaymentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> softDelete(@PathVariable Long id){
+    public ResponseEntity<PaymentResponseDTO> softDelete(@PathVariable Long id){
         service.softDelete(id);
         return ResponseEntity.noContent().build();
     }

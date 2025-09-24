@@ -1,5 +1,6 @@
 package com.desafio.pagamentos.dto;
 
+import com.desafio.pagamentos.domain.Payment;
 import com.desafio.pagamentos.domain.PaymentMethod;
 import com.desafio.pagamentos.domain.PaymentStatus;
 
@@ -97,5 +98,18 @@ public class PaymentResponseDTO {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public PaymentResponseDTO(Payment payment) {
+        this.active =payment.getActive();
+        this.payerDocument = payment.getPayerDocument();
+        this.createdAt= payment.getCreatedAt();
+        this.debitCode = payment.getDebitCode();
+        this.id = payment.getId();
+        this.method = payment.getMethod();
+        this.cardNumber = payment.getCardNumber();
+        this.paymentAmount = payment.getPaymentAmount();
+        this.status = payment.getStatus();
+        this.updatedAt = payment.getUpdatedAt();
     }
 }

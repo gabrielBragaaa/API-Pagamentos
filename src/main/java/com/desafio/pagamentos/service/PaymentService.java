@@ -13,10 +13,10 @@ import java.util.Optional;
 @Service
 public class PaymentService {
 
-    private final PaymentRepository repo;
+    private final PaymentRepository repository;
 
-    public PaymentService(PaymentRepository repo) {
-        this.repo = repo;
+    public PaymentService(PaymentRepository repository) {
+        this.repository = repository;
     }
 
     @Transactional
@@ -27,38 +27,38 @@ public class PaymentService {
         }
         p.setStatus(PaymentStatus.PENDENTE);
         p.setActive(true);
-        return repo.save(p);
+        return repository.save(p);
     }
 
-    public Optional<Payment> findByid(Long id) {
-        return repo.findById(id);
+    public Optional<Payment> findById(Long id) {
+        return repository.findById(id);
     }
 
     public List<Payment> listAll() {
-        return repo.findAll();
+        return repository.findAll();
     }
 
     public List<Payment> filterByDebitCode(Integer code) {
-        return repo.findByDebitCode(code);
+        return repository.findByDebitCode(code);
     }
 
     public List<Payment> filterByPayerDocument(String doc) {
-        return repo.findByPayerDocument(doc);
+        return repository.findByPayerDocument(doc);
     }
 
     public List<Payment> filterByStatus(PaymentStatus status) {
-        return repo.findByStatus(status);
+        return repository.findByStatus(status);
     }
 
     @Transactional
     public Payment updateStatus(Long id, PaymentStatus newStatus) {
-        Payment p = repo.findById(id).orElseThrow(() -> new IllegalArgumentException("Pagamento não encontrado"));
+        Payment p = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Pagamento não encontrado"));
 
         if (p.getStatus() == PaymentStatus.PENDENTE){
             if(newStatus == PaymentStatus.PROCESSADO_SUCESSO || newStatus == PaymentStatus.PROCESSADO_FALHA){
                 p.setStatus(newStatus);
                 p.setUpdatedAt(java.time.LocalDateTime.now());
-                return repo.save(p);
+                return repository.save(p);
             }else {
                 throw new IllegalArgumentException("Transação invalida de PROCESSADO_PENDENTE para " + newStatus);
             }
@@ -68,7 +68,7 @@ public class PaymentService {
             if(newStatus == PaymentStatus.PENDENTE){
                 p.setStatus(newStatus);
                 p.setUpdatedAt(java.time.LocalDateTime.now());
-                return repo.save(p);
+                return repository.save(p);
             }else {
                 throw new IllegalArgumentException("Transação invalida de PROCESSADO_FALHA para " + newStatus);
             }
@@ -79,13 +79,13 @@ public class PaymentService {
 
     @Transactional
     public void softDelete(Long id){
-        Payment p = repo.findById(id).orElseThrow(() -> new IllegalArgumentException("Pagamento não encontrado"));
+        Payment p = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Pagamento não encontrado"));
         if (p.getStatus() != PaymentStatus.PENDENTE){
             throw new IllegalArgumentException("So é possivel deletar pagemntos com status PENDENTE");
         }
         p.setActive(false);
         p.setUpdatedAt(java.time.LocalDateTime.now());
-        repo.save(p);
+        repository.save(p);
     }
 
 }
