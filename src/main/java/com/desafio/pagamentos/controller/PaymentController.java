@@ -52,21 +52,26 @@ public class PaymentController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Payment>> list(
+    public ResponseEntity<List<PaymentResponseDTO>> list(
             @RequestParam(required = false) Integer debitCode,
             @RequestParam(required = false) String payerDocument,
             @RequestParam(required = false) String status
     ){
+        List<Payment> result;
+
         if (debitCode != null){
-            return ResponseEntity.ok(service.filterByDebitCode(debitCode));
+            result = service.filterByDebitCode(debitCode);
         } else if (payerDocument != null) {
-            return ResponseEntity.ok(service.filterByPayerDocument(payerDocument));
+            result = service.filterByPayerDocument(payerDocument);
         } else if (status != null) {
             PaymentStatus s = PaymentStatus.valueOf(status.toUpperCase());
-            return ResponseEntity.ok(service.filterByStatus(s));
+            result = service.filterByStatus(s);
         }else {
-            return ResponseEntity.ok(service.listAll());
+            result = service.listAll();
         }
+
+        List<PaymentResponseDTO> response = result.stream().map(PaymentResponseDTO::new).toList();
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
