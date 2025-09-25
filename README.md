@@ -11,15 +11,15 @@ API RESTful para gerenciar pagamentos de débitos de pessoas físicas e jurídic
 
 ## Funcionalidades
 
-1- Criar pagamento **POST /api/payments**
+### 1- Criar pagamento **POST /api/payments**
 
 **Campos**: debitCode, payerDocument, method (boleto, pix, cartao_credito, cartao_debito), cardNumber (apenas se o pagamento for em cartão), paymentAmount.
 
-2- Atualizar status **PUT /api/payments/{id}/status**
+### 2- Atualizar status **PUT /api/payments/{id}/status**
 
 **Campo**: newStatus (PENDENTE, PROCESSADO_SUCESSO, PROCESSADO_FALHA)
 
-3- Listar todos os pagamentos **GET /api/payments**
+### 3- Listar todos os pagamentos **GET /api/payments**
 
 **Filtros de busca:**
 
@@ -29,7 +29,7 @@ API RESTful para gerenciar pagamentos de débitos de pessoas físicas e jurídic
 
 
 
-4- Exclusão lógica **DELETE /api/payments/{id}**
+### 4- Exclusão lógica **DELETE /api/payments/{id}**
 
 Só permite deletar pagamentos com status = PENDENTE. Altera o status do pagamento para inativo e mantem os dados no banco **(active muda para false).**
 
