@@ -8,7 +8,7 @@ API RESTful para gerenciar pagamentos de débitos de pessoas físicas e jurídic
 - Spring boot
 - Postman
 - Docker
-- Banco de dados h2
+- Postgres
 
 ## Funcionalidades
 
