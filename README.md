@@ -13,7 +13,7 @@ API RESTful para gerenciar pagamentos de débitos de pessoas físicas e jurídic
 
 1- Criar pagamento **POST /api/payments**
 
-**Campos**: debitCode, payerDocument, method (boleto, pix, cartao_credito, cartao_debito), cardNumber (para cartão), paymentAmount.
+**Campos**: debitCode, payerDocument, method (boleto, pix, cartao_credito, cartao_debito), cardNumber (apenas se o pagamento for em cartão), paymentAmount.
 
 2- Atualizar status **PUT /api/payments/{id}/status**
 
