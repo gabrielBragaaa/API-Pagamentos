@@ -18,18 +18,6 @@ public class PaymentService {
     public PaymentService(PaymentRepository repository) {
         this.repository = repository;
     }
-
-    @Transactional
-    public Payment createPayment(Payment p) {
-        if ((p.getMethod() == PaymentMethod.CARTAO_CREDITO || p.getMethod() == PaymentMethod.CARTAO_DEBITO)
-                && (p.getCardNumber() == null || p.getCardNumber().isBlank())) {
-            throw new IllegalArgumentException("Numero do cartão é preciso para efetuar pagamento");
-        }
-        p.setStatus(PaymentStatus.PENDENTE);
-        p.setActive(true);
-        return repository.save(p);
-    }
-
     public Optional<Payment> findById(Long id) {
         return repository.findById(id);
     }
@@ -48,6 +36,19 @@ public class PaymentService {
 
     public List<Payment> filterByStatus(PaymentStatus status) {
         return repository.findByStatus(status);
+    }
+
+    @Transactional
+    public Payment createPayment(Payment p) {
+        if ((p.getMethod() == PaymentMethod.CARTAO_CREDITO || p.getMethod() == PaymentMethod.CARTAO_DEBITO)
+                && (p.getCardNumber() == null || p.getCardNumber().isBlank())) {
+            throw new IllegalArgumentException("Número do cartão é obrigatório para efetuar o pagamento");
+        }if (p.getMethod() == PaymentMethod.PIX && p.getCardNumber() != null){
+            throw new IllegalArgumentException("Não é permitido enviar número do cartão para pagamento via PIX");
+        }
+        p.setStatus(PaymentStatus.PENDENTE);
+        p.setActive(true);
+        return repository.save(p);
     }
 
     @Transactional

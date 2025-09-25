@@ -156,3 +156,6 @@ Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Projects/API-
 	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
 	... 139 more
+2025-09-25 15:15:03.382573-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]PAYMENTS"; expected "PREPARE"; SQL statement:
+PAYMENTS [42001-232]

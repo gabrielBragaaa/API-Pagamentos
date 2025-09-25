@@ -6,9 +6,8 @@ API RESTful para gerenciar pagamentos de débitos de pessoas físicas e jurídic
 - Intellij
 - Java 17
 - Spring boot
+- Banco de dados H2
 - Postman
-- Docker
-- Postgres
 
 ## Funcionalidades
 
@@ -20,13 +19,14 @@ API RESTful para gerenciar pagamentos de débitos de pessoas físicas e jurídic
 
 **Campo**: newStatus.(PENDENTE, PROCESSADO_SUCESSO, PROCESSADO_FALHA)
 
-3- Listar pagamentos **GET /api/payments**
+3- Listar todos os pagamentos **GET /api/payments**
 
 **Filtros de busca:**
 
-- ?debitCode=xxx 
-- ?payerDocument=xxx
-- ?status=xxx
+- GET /api/payments?status=PENDENTE
+- GET /api/payments?payerDocument=12345678900
+- GET /api/payments?debitCode=101
+
 
 
 4- Exclusão lógica **DELETE /api/payments/{id}**
