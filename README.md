@@ -1,6 +1,6 @@
 # API PAGAMENTOS
 ## Sobre o projeto
-API RESTful para gerenciar pagamentos de débitos de pessoas físicas e jurídicas.
+API RESTful para gerenciar pagamentos de pessoas físicas e jurídicas.
 
 ### Tecnologias utilizadas e Ferramentas
 - Intellij
