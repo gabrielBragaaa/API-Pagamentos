@@ -17,7 +17,7 @@ API RESTful para gerenciar pagamentos de débitos de pessoas físicas e jurídic
 
 2- Atualizar status **PUT /api/payments/{id}/status**
 
-**Campo**: newStatus.(PENDENTE, PROCESSADO_SUCESSO, PROCESSADO_FALHA)
+**Campo**: newStatus (PENDENTE, PROCESSADO_SUCESSO, PROCESSADO_FALHA)
 
 3- Listar todos os pagamentos **GET /api/payments**
 
