@@ -31,7 +31,7 @@ API RESTful para gerenciar pagamentos de débitos de pessoas físicas e jurídic
 
 4- Exclusão lógica **DELETE /api/payments/{id}**
 
-Só permite deletar pagamentos com status = PENDENTE. Altera o status do pagamento para inativo e mantem os dados no banco.
+Só permite deletar pagamentos com status = PENDENTE. Altera o status do pagamento para inativo e mantem os dados no banco **(active que muda para false).**
 
 ## Observações
 
